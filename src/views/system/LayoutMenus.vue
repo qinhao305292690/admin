@@ -52,6 +52,7 @@
                 <a-menu
                     default-open-keys={this.currentParentPath}
                     defaultSelectedKeys={this.currentPath}
+                    selectedKeys={this.currentPath}
                     theme="dark"
                     mode="inline"
                     style="border-top: 1px solid #3a3844">
