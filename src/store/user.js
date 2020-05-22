@@ -1,26 +1,33 @@
 import axios from '../utils/axios'
 import router, {syncRoutesMap} from '../route'
 
-function filterSyncMenus(menus) {
-    let {children: HOME_ROUTERS} = syncRoutesMap.find(({name}) => name === 'index')
-    return HOME_ROUTERS.filter(route => menus.includes(route.path))
+function filterSyncMenus(syncRoutes, menus) {
+    let routes = syncRoutes.filter(route => {
+        if (route.children && route.children.length) {
+            route.children = filterSyncMenus(route.children, menus)
+        }
+        for (let i = 0; i < menus.length; i++) {
+            if (menus[i] === route.path) {
+                return true
+            }
+        }
+        return false
+    })
+    return routes
 }
 
 export default {
     namespaced: true,
     state: {
         userData: {},
-        menus: []//处理之后的菜单
+        menus: [] //处理之后的菜单
     },
     mutations: {
         SET_USERDATA(state, userData) {
+            let routes = filterSyncMenus(syncRoutesMap, userData.menus)
             state.userData = userData
-            state.menus = filterSyncMenus(userData.menus)
-            const routes = syncRoutesMap.find(item => item.name == 'index')
-            routes.children = state.menus
-            // router.options.routes = [routes, ...router.options.routes]
-            router.addRoutes([routes])
-
+            state.menus = routes[0].children
+            router.addRoutes(routes)
         }
     },
     actions: {

@@ -5,13 +5,16 @@ import 'nprogress/nprogress.css'
 import store from '../store'
 
 Vue.use(VueRouter)
+/**
+ *  动态路由表,原则上来说是通过后端进行比对动态添加
+ * **/
 export const syncRoutesMap = [
     {
         name: 'index',
         path: '/',
         redirect: '/WelcomePage',
-        component: () =>
-            import ('@/views/Home.vue'),
+        component: () => import ('@/views/Home.vue'),
+        meta:{hujianfeng: 1},
         children: [
             {
                 name: 'WelcomePage',
@@ -36,9 +39,30 @@ export const syncRoutesMap = [
                         name: 'company-list',
                         path: '/company/list',
                         meta: {
-                            title: '公司列表'
+                            title: '公司列表',
+                            icon: 'zhihu'
                         },
                         component: () => import ('@/views/page/CompanyList'),
+                        children: [
+                            {
+                                name: 'company-sub',
+                                path: '/company/sub',
+                                meta: {
+                                    title: '公司探戈',
+                                    icon: 'zhihu'
+                                },
+                                component: () => import ('@/views/page/CompanyList')
+                            }
+                        ]
+                    },
+                    {
+                        name: 'company-detail',
+                        path: '/company/detail',
+                        meta: {
+                            title: '公司详情',
+                            icon: 'zhihu'
+                        },
+                        component: () => import ('@/views/page/CompanyDetail'),
                     }
                 ]
             },
