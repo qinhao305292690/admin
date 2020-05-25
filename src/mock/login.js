@@ -30,12 +30,13 @@ mock('/api/getMenus', 'get', () => {
         menus: [
             '/',
             '/WelcomePage',
-            '/contract',
-            '/company',
-            '/company/list',
-            '/bankAccount',
-            '/company/sub',
-            '/company/detail'] //路由权限
+            // '/contract',
+            // '/company',
+            // '/company/list',
+            // '/bankAccount',
+            // '/company/sub',
+            // '/company/detail'
+        ] //路由权限
         //还可以自定义其他数据
     }, '获取成功!', 200))
 })

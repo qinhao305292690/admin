@@ -14,7 +14,7 @@ export const syncRoutesMap = [
         path: '/',
         redirect: '/WelcomePage',
         component: () => import ('@/views/Home.vue'),
-        meta:{hujianfeng: 1},
+        meta: {hujianfeng: 1},
         children: [
             {
                 name: 'WelcomePage',
@@ -42,18 +42,7 @@ export const syncRoutesMap = [
                             title: '公司列表',
                             icon: 'zhihu'
                         },
-                        component: () => import ('@/views/page/CompanyList'),
-                        children: [
-                            {
-                                name: 'company-sub',
-                                path: '/company/sub',
-                                meta: {
-                                    title: '公司探戈',
-                                    icon: 'zhihu'
-                                },
-                                component: () => import ('@/views/page/CompanyList')
-                            }
-                        ]
+                        component: () => import ('@/views/page/CompanyList')
                     },
                     {
                         name: 'company-detail',

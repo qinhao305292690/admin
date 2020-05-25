@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import {
     Button,
+    Select,
     Input,
     Card,
     FormModel,
@@ -10,9 +11,16 @@ import {
     Dropdown,
     Avatar,
     Modal,
+    InputNumber,
     Table,
+    Tag,
+    Popover,
     message
 } from 'ant-design-vue';
+Vue.use(Select);
+Vue.use(InputNumber);
+Vue.use(Tag);
+Vue.use(Popover);
 Vue.use(Button);
 Vue.use(Layout);
 Vue.use(Table);
