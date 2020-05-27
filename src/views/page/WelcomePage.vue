@@ -10,78 +10,71 @@
                 </a-select-option>
             </a-select>
         </section>
-        <a-popover title="请选择" trigger="click" placement="bottom">
-            <template slot="content">
+        <br>
+        <!--颜色:-->
+        <aside class="tag-container">
+            <a-tag @close="() => handleClose(i.title,i.target)" :key="i.title" v-for="(i,index) in czg" closable
+                   :visible="true" color="cyan">
+                {{i.title}}
+            </a-tag>
+
+            <a-popover title="请选择" trigger="click" placement="bottom">
+                <template slot="content">
                 <span>
                    规格参数：
                 </span>
-                <a-select
-                        v-if="specValue=='colorList'"
-                        autoClearSearchValue
-                        v-model="c"
-                        mode="multiple"
-                        style="width: 150px"
-                        placeholder="请选择"
-                        @change="handleChange">
-                    <a-select-option :key="item.value" v-for="(item) in colorList" :value="item.title">
-                        {{item.title}}
-                    </a-select-option>
-                </a-select>
-                <a-select
-                        v-model="z"
-                        v-if="specValue=='sizeList'"
-                        mode="multiple"
-                        style="width: 150px"
-                        placeholder="请选择"
-                        @change="handleChange">
-                    <a-select-option :key="item.value" v-for="(item) in sizeList" :value="item.title">
-                        {{item.title}}
-                    </a-select-option>
-                </a-select>
-                <a-select
-                        v-model="g"
-                        v-if="specValue=='ggList'"
-                        mode="multiple"
-                        style="width: 150px"
-                        placeholder="请选择"
-                        @change="handleChange">
-                    <a-select-option :key="item.value" v-for="(item) in ggList" :value="item.title">
-                        {{item.title}}
-                    </a-select-option>
-                </a-select>
-            </template>
-            <a-button type="primary" style="margin-top: 10px;">添加</a-button>
-        </a-popover>
-        <br>
-        颜色:
-        <aside class="tag-container">
-            <a-tag @close="() => handleClose(index,'c')" :key="i" v-for="(i,index) in c" closable :visible="true" color="cyan">
-                {{i}}
-            </a-tag>
+                    <a-select
+                            v-if="specValue=='colorList'"
+                            autoClearSearchValue
+                            v-model="c"
+                            mode="multiple"
+                            style="width: 150px"
+                            placeholder="请选择"
+                            @change="(e)=>handleChange(e,'c')">
+                        <a-select-option :key="item.value" v-for="(item) in colorList" :value="item.title">
+                            {{item.title}}
+                        </a-select-option>
+                    </a-select>
+                    <a-select
+                            v-model="z"
+                            v-if="specValue=='sizeList'"
+                            mode="multiple"
+                            style="width: 150px"
+                            placeholder="请选择"
+                            @change="(e)=>handleChange(e,'z')">
+                        <a-select-option :key="item.value" v-for="(item) in sizeList" :value="item.title">
+                            {{item.title}}
+                        </a-select-option>
+                    </a-select>
+                    <a-select
+                            v-model="g"
+                            v-if="specValue=='ggList'"
+                            mode="multiple"
+                            style="width: 150px"
+                            placeholder="请选择"
+                            @change="(e)=>handleChange(e,'g')">
+                        <a-select-option :key="item.value" v-for="(item) in ggList" :value="item.title">
+                            {{item.title}}
+                        </a-select-option>
+                    </a-select>
+                </template>
+                <a-button type="link" icon="plus" style="margin-top: 10px;">添加</a-button>
+            </a-popover>
         </aside>
-        尺寸:
-        <aside class="tag-container">
-            <a-tag @close="() => handleClose(index,'z')" :key="i" v-for="(i,index) in z" closable color="yellow">
-                {{i}}
-            </a-tag>
-        </aside>
-        尺码:
-        <aside class="tag-container">
-            <a-tag @close="() => handleClose(index,'g')" :key="i" v-for="(i,index) in g" closable color="red">
-                {{i}}
-            </a-tag>
-        </aside>
+
+        <a-button style="margin-top: 10px;" type="primary">添加规格</a-button>
         <section style="margin-top: 10px;background: #fff;">
             <p style="margin: 10px 0 10px 0;">规格信息:</p>
 
             <table-info
-            :tableData="[...c,...z,...g]"
+                    :tableData.sync="czg"
             ></table-info>
         </section>
     </div>
 </template>
 <script>
     import TableInfo from '@/views/components/TableInfo'
+
     export default {
         name: "WelcomePage",
         components: {
@@ -89,10 +82,14 @@
         },
         data() {
             return {
+                specis: [
+                    
+                ],
                 specValue: 'colorList',
                 c: [],
                 z: [],
                 g: [],
+                czg: [],
                 specificationsList: [
                     {
                         title: '颜色',
@@ -139,13 +136,25 @@
                 ],
             }
         },
+        created() {
+
+        },
         methods: {
-            handleChange(valueArr) {
-                let keys = this.specValue == 'colorList' ? 'c' : (this.specValue == 'sizeList' ? 'z' : 'g')
-                this[keys] = valueArr
+            handleChange(valueArr,target) {
+                this[target] = valueArr
+                this.czg = this.mapArray()
             },
-            handleClose(index,target){
-                this[target].splice(index,1)
+            mapArray(){
+                return [
+                    ...this.c.map(item=>({title:item,target:'c',code: '0',price: '0'})),
+                    ...this.z.map(item=>({title:item,target:'z',code: '0',price: '0'})),
+                    ...this.g.map(item=>({title:item,target:'g',code: '0',price: '0'}))
+                ]
+            },
+            handleClose(title, target) {
+                this[target] = this[target].filter(ArrTitle=>ArrTitle!==title)
+                console.log(this[target],'thiss');
+                this.czg = this.czg.filter(item=>item.title!==title)
             }
         },
     }
