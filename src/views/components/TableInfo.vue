@@ -20,9 +20,6 @@
 
 <script>
     export default {
-        filters:{
-            
-        },
         name: "TableInfo",
         props: {
             tableData: {
