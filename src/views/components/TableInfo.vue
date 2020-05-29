@@ -41,7 +41,6 @@
                 this.$emit('update:tableData', result)
             }
         },
-
         data() {
             return {
                 columns: [],
