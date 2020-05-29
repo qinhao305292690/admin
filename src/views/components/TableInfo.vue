@@ -21,6 +21,10 @@
 <script>
     export default {
         name: "TableInfo",
+        mixins: [],
+        filters: {
+
+        },
         props: {
             tableData: {
                 type: Array
@@ -41,7 +45,6 @@
                 this.$emit('update:tableData', result)
             }
         },
-
         data() {
             return {
                 columns: [],
