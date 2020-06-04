@@ -8,8 +8,11 @@ import './mock'
 Vue.config.productionTip = false
 
 let vm = new Vue({
+    // el: '#app',
     router,
     store,
     render: h => h(App),
 })
-vm.$mount('#app')
+
+document.getElementById('app').appendChild(vm.$mount().$el)
+    // vm.$mount('#app')
