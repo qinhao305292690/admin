@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './route'
 import store from './store'
-import './utils'
+import './utils/index.js'
 import './mock'
 
 Vue.config.productionTip = false

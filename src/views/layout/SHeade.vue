@@ -1,6 +1,7 @@
 <template>
     <div class="user-info">
         <section>
+            <a-button size="small" type="primary" @click="$router.push('/dashboard')">点击跳转到仪表盘</a-button>
             <a-avatar :src="$store.state.user.userData.avatar" :size="32"
                       icon="user"/>
             <a-dropdown>

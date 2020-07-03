@@ -14,9 +14,13 @@ import {
     InputNumber,
     Table,
     Tag,
+    Col,
+    Row,
     Popover,
     message
 } from 'ant-design-vue';
+Vue.use(Col);
+Vue.use(Row);
 Vue.use(Select);
 Vue.use(InputNumber);
 Vue.use(Tag);

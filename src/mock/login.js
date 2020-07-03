@@ -35,6 +35,7 @@ mock('/api/getMenus', 'get', () => {
                 '/company/list',
                 '/bankAccount',
                 '/company/sub',
+                '/dashboard',
                 '/company/detail',
                 '/settings',
             ] //路由权限
